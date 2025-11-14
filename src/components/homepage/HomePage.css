@@ -1,0 +1,279 @@
+/* Global layout */
+ 
+.app {
+  display: flex;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background-color:   #E3EBFF;
+  padding: 1rem;
+  border-radius: 0px 40px 40px 0px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.sidebar.open {
+  width: 260px;
+}
+
+.sidebar:not(.open) {
+  width: 70px;
+}
+.sidebar:not(.open) .sidebar-content{
+    visibility:hidden;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.logo {
+    position: absolute;
+  font-size:2.5rem;
+  font-weight: 700;
+  color:  #192a56;
+  margin-top: 20px;
+  margin-bottom: 2rem;
+  margin-left: 300px;
+}
+.version{
+   position: absolute;
+    font-size: 12px;
+    margin-left: 440px;
+    margin-top: 38px; 
+    border-radius: 20px;
+    background-color: #192a56;
+    color: #E3EBFF;
+    padding: 3px 5px 2px 5px;
+
+}
+
+.menu-item {
+  display: block;
+  font-size: 13px;
+  font-weight:bold;
+  width: 100%;
+  color: #192a56;
+  text-align: left;
+  background: #E3EBFF;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+.menu-item:hover{
+    color:#E3EBFF;
+    background-color: #192a56;
+
+}
+
+.recent-section {
+  margin-top: 2rem;
+  color: #192a56;
+}
+
+.recent-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.recent-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recent-section li {
+  font-size: 0.9rem;
+  padding: 4px 0;
+  color: #333;
+}
+
+.settings-btn {
+  position: absolute;
+  bottom: 20px;
+  font-size: 17px;
+  font-weight: bold;
+  left: 30px;
+  right: 30px;
+  color:    #E3EBFF;
+  background-color:  #192a56;
+  border: none;
+  border-radius: 40px;
+  padding: 20px;
+  cursor: pointer;
+}
+
+/* Main Section */
+.main {
+  flex: 1;
+  padding: 2rem;
+  position: relative;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-profile {
+  position: relative;
+}
+
+.user-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #223366;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dropdown {
+  position: absolute;
+  top: 50px;
+  right: 300;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 150px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown p {
+  margin: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown p:hover {
+  background-color: #f0f0f0;
+  
+}
+
+/* Center Content */
+.content {
+  text-align: center;
+  margin-top: 200px;
+}
+.hello{
+    color: #192a56;
+}
+ .main-search-box{
+    margin-left: 580px;  
+   
+ }
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e3ebff;
+  border-radius: 20px;
+  outline: 3px solid #192a56;
+  padding: 40px 15px;
+  width: 80%;
+  margin: 1.5rem auto;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.plus-btn{
+  border: none;
+  background: none;
+  position:relative;
+  top: 30px;
+  left: 20px;
+  background-color: #192a56;
+  border-radius: 30px;
+  color: #E3EBFF;
+ padding: 2px 10px 2px 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.mic-btn {
+  border: none;
+  background: none;
+  position:relative;
+  top: 30px;
+  left: 0px;
+  background-color: #192a56;
+  border-radius: 30px;
+  color: #E3EBFF;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+ 
+}
+
+.buttons button {
+    
+  background: #e3ebff;
+  color: #192a56;
+  font-weight: bold;
+  border: 2px solid #192a56 ;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.industries-head{
+    color: #192a56;
+}
+
+.industries {
+    margin-top: 50px;
+  color: #192a56;
+  
+  display: flex;
+   font-weight: bold;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.chip {
+    
+border: 2px solid #192a56 ;
+  background-color: #e3ebff;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.chip:hover {
+  background-color: #192a56;
+  color: #e3ebff ;
+}
+
+footer {
+  margin-top: 10rem;
+  font-size: 1rem;
+  color:#192a56;
+}

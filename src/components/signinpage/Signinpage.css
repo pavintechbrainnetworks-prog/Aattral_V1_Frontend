@@ -1,0 +1,426 @@
+
+.signin-attral {
+  width: 600px;
+  top: 350px;
+  left: 260px;
+  position: relative;
+}
+
+.signin-Poweredby  {
+  color: rgb(17, 54, 124);
+  font-size: 20px;
+  position:absolute;
+  text-decoration: none;
+  top:840px;
+  left: 450px;
+  
+}
+
+.signin-techbrain {
+  font-weight: 600;
+}
+
+.signin-container {
+  width: 600px;
+  height: 840px;
+  margin-top: -190px;
+  margin-left: 1000px;
+  padding: 50px 30px;
+  background-color: #192a56;
+  border-radius: 40px;
+  text-align: center;
+ 
+}
+ 
+
+.signin-tittle {
+  color: #e3ebff;
+  margin-top: 100px;
+  margin-bottom: 40px;
+  font-size: 40px;
+  
+}
+
+.signin-input-box {
+  padding: 10px;
+  margin-top: 5px; 
+}
+.signin-input{
+  
+  width:80%;
+  padding: 18px;
+  border-radius: 50px;
+  border: 1px solid #192a56;
+  background-color: #e3ebff;
+  font-size: 15px;
+}
+.forgot-password{
+  color: #e3ebff;
+  text-decoration: none;
+  margin-left: 140px;
+  margin-top: -10px;
+  position: absolute;
+  font-weight: 500;
+}
+
+.signin-button {
+  width: 150px;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  color: #192a56;
+  background-color: #e3ebff;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.or-signup {
+  color: #e3ebff;
+  font-size: 20px;
+  margin: 20px;
+}
+
+.signin-social-icon {
+  position: relative;
+  display: flex;
+  top: 10px;
+  justify-content: center;
+  gap: 15px;
+}
+
+.signin-social-icon img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.no-account {
+  font-size: 20px;
+  margin-top: 60px;
+  position: absolute;
+  color: #e3ebff;
+}
+
+.signin {
+  color: #e3ebff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+ 
+@media (max-width: 1440px) {
+  .signin-container {
+    width: 600px;
+    margin-top: -150px;
+    margin-left: 750px;
+    height: 810px;
+  }
+
+  .signin-attral {
+    width: 500px;
+    top: 300px;
+    left: 100px;
+  }
+   
+  .signin-Poweredby {
+    font-size: 18px;
+    top: 800px;
+    left: 240px;
+  }
+
+  .sigin-button {
+    font-size: 20px;
+    
+  }
+
+.signin-input{
+  padding: 15px;
+  border-radius: 50px; 
+  font-size: 14px;
+}
+
+  .or-signup {
+    font-size: 23px;
+  }
+
+  .signin-social-icon img {
+    width: 30px;
+    height: 30px;
+  }
+  .no-account{
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .signin-container {
+    width: 500px;
+    height: 780px;
+    padding: 40px 20px;
+    margin-top: -120px;
+    margin-right: -600px;
+    margin-left: 500px;
+  }
+
+  .signin-attral {
+    width: 380px;
+    top: 320px;
+    left: 40px;
+  }
+  .signin-Poweredby {
+    font-size: 15px;
+    top: 770px;
+    left: 120px;
+  }
+
+  .signin-button {
+    font-size: 18px;
+    padding: 12px;
+  }
+
+.signin-input {
+    font-size: 13px;
+  }
+  .forgot-password{
+  margin-left: 110px;
+}
+  .or-signup {
+    font-size: 18px;
+  }
+
+  .signin-social-icon img {
+    width: 27px;
+    height: 27px;
+  }
+   .no-account {
+  font-size: 17px;
+  }
+}
+
+@media (max-width: 768px) {
+  .signin-container {
+    width: 500px;
+    height: 680px;
+    padding: 30px 20px;
+    margin-top: 100px;
+    margin-left: 130px;
+  }
+
+  .signin-attral {
+    display: none;
+  }
+  .signin-Poweredby {
+    display: none;
+  }
+   .signin-tittle {
+   font-size: 30px;
+  
+  }
+
+  .signin-button {
+    font-size: 14px;
+  }
+   .signin-input-box {
+    padding: 4px;
+    margin-bottom: 10px;
+  }
+
+   .signin-input {
+    font-size: 13px;
+    padding: 13px;
+     
+  }
+   .or-signup {
+    font-size: 17px;
+  }
+
+  .signin-social-icon img {
+    width: 25px;
+    height: 25px;
+  }
+   .no-account {
+  font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signin-container {
+    background-color: #e3ebff;
+    width: 400px;
+    height: 650px;
+    margin-top: 50px;
+    margin-left: 14px;
+  }
+ 
+  .signin-tittle  { 
+    color: #192a56;
+  font-size: 30px;
+  margin-top: 100px;
+  }
+   .signin-input-box {
+    padding: 4px;
+    color: #192a56;
+    margin-bottom: 10px;
+  }
+
+.signin-input{
+    font-size: 15px;
+    background-color: white;
+   
+  }
+   .forgot-password{
+    color: #192a56;
+  margin-left: 70px;
+  font-size: 15px;
+}
+
+  .signin-button {
+    font-size: 15px;
+    width: 120px;
+     background-color: #192a56;
+    color: #e3ebff;
+    }
+
+  .or-signup {
+    color: #192a56;
+    font-size: 15px;
+  }
+.signin-social-icon {
+  position: relative;
+  display: flex;
+  top: 10px;
+  justify-content: center;
+  gap: 15px;
+}
+
+.signin-social-icon img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  /* Apply dark blue color filter (#192a56) */
+  filter: invert(13%) sepia(31%) saturate(111000%) hue-rotate(199deg) brightness(30%) contrast(100%);
+}
+
+  .no-account {
+    color: #192a56;
+    font-size: 15px;
+  }
+.signin{
+  color: #192a56;
+}
+
+}
+
+@media (max-width: 375px) {
+  .signin-container {
+    width: 350px;
+    margin-top: 50px;
+    height: 620px;
+    margin-left: 13px;
+  }
+ 
+.signin-tittle  {
+ 
+  margin-bottom: 40px;
+  font-size: 25px;
+  margin-top: 120px;
+  }
+
+  .signin-input-box {
+    padding: 4px;
+    margin-bottom: 10px;
+  }
+
+ .signin-input{
+ 
+    padding: 12px;
+    border-radius: 30px;
+    font-size: 13px;
+  }
+   .forgot-password{
+    
+  margin-left: 60px;
+  font-size: 13px;
+}
+
+  .signin-button {
+    font-size: 14px;
+    width: 120px;
+    padding: 10px;
+    
+  }
+  .or-signup {
+    font-size: 14px;
+  }
+
+  
+  .signin-social-icon img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .no-account{
+    margin-top: 50px;
+    font-size: 13px;
+   
+  }
+
+
+}
+
+@media (max-width: 320px) {
+  .signin-container {
+    background-color: #e3ebff;
+    width: 300px;
+    height: 600px;
+    margin-top: 70px;
+    margin-left: 10px;
+  }
+ 
+.signin-tittle  {
+  color: #192a56;
+  font-size: 20px;
+  }
+
+  .signin-input-box {
+    padding: 4px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+.signin-input{
+    padding: 14px;
+    font-size: 12px;
+    background-color: white;
+  }
+   .forgot-password{
+    color: #192a56;
+    margin-left: 40px;
+     font-size: 12px;
+}
+  .signin-button {
+
+    font-size: 12px;
+    width: 100px;
+    
+  }
+  .or-signup {
+    color: #192a56;
+    font-size: 12px;
+    margin-top: 30px;
+  }
+
+  .signin-social-icon {
+
+    margin-left: 6px;
+    gap: 15px;
+  }
+  .signin-social-icon img {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 20px;
+    
+  }
+
+}
