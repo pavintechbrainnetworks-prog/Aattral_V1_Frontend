@@ -33,7 +33,7 @@
 }
  
 
-.signin-tittle {
+.signin-title{
   color: #e3ebff;
   margin-top: 100px;
   margin-bottom: 40px;
@@ -58,7 +58,6 @@
   color: #e3ebff;
   text-decoration: none;
   margin-left: 140px;
-  margin-top: -10px;
   position: absolute;
   font-weight: 500;
 }
@@ -72,9 +71,9 @@
   color: #192a56;
   background-color: #e3ebff;
   font-size: 20px;
-  margin-top: 20px;
+  margin-top: 30px;
 }
-
+ 
 .or-signup {
   color: #e3ebff;
   font-size: 20px;
@@ -96,9 +95,10 @@
 }
 
 .no-account {
+  position: relative;
+top: 50px;
   font-size: 20px;
-  margin-top: 60px;
-  position: absolute;
+ 
   color: #e3ebff;
 }
 
@@ -107,14 +107,19 @@
   text-decoration: none;
   font-weight: 600;
 }
+.error-msg {
+  font-size: 13px;
+  color: rgb(238, 12, 12);
+  margin-top: 5px;
+}
 
  
 @media (max-width: 1440px) {
   .signin-container {
     width: 600px;
-    margin-top: -150px;
-    margin-left: 750px;
-    height: 810px;
+    margin-top: -180px;
+    margin-left: 680px;
+    height: 780px;
   }
 
   .signin-attral {
@@ -125,7 +130,7 @@
    
   .signin-Poweredby {
     font-size: 18px;
-    top: 800px;
+    top: 760px;
     left: 240px;
   }
 
@@ -158,19 +163,19 @@
     width: 500px;
     height: 780px;
     padding: 40px 20px;
-    margin-top: -120px;
+    margin-top: -90px;
     margin-right: -600px;
-    margin-left: 500px;
+    margin-left: 420px;
   }
 
   .signin-attral {
-    width: 380px;
+    width: 320px;
     top: 320px;
     left: 40px;
   }
   .signin-Poweredby {
     font-size: 15px;
-    top: 770px;
+    top: 780px;
     left: 120px;
   }
 
@@ -361,7 +366,6 @@
   }
 
   .no-account{
-    margin-top: 50px;
     font-size: 13px;
    
   }
@@ -421,6 +425,9 @@
     height: 20px;
     margin-bottom: 20px;
     
+  }
+  .no-account{
+    top: 20px;
   }
 
 }
