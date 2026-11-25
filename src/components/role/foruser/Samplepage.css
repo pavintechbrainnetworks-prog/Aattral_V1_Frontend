@@ -1,0 +1,15 @@
+.samplepage-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 32px);
+  background-color: #e3ebff;
+  color: #192a56;
+  text-align: center;
+}
+
+.samplepage-container h1 {
+  font-size: clamp(24px, 5vw, 36px);
+  font-weight: 700;
+}

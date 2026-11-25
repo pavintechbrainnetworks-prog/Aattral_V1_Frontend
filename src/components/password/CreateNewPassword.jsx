@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CreateNewPassword.css";
 import logo from "../../assets/attrallogo.png";
+import api from "../../services/api";
 
 const CreateNewPassword = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
   const [notMatch, setNotMatch] = useState("");
@@ -23,7 +27,7 @@ const CreateNewPassword = () => {
     return minLength && types >= 2;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Reset messages
@@ -45,9 +49,27 @@ const CreateNewPassword = () => {
       return;
     }
 
-    // SUCCESS
-    setSuccess("Password successfully updated!");
-    console.log("New password saved:", password);
+    // Call API
+    setLoading(true);
+    try {
+      const email = localStorage.getItem("reset_email") || "";
+      const otp = localStorage.getItem("reset_otp") || "";
+      await api.post("/auth/reset-password", {
+        email,
+        otp,
+        newPassword: password,
+      });
+      localStorage.removeItem("reset_email");
+      localStorage.removeItem("reset_otp");
+      setSuccess("Password successfully updated!");
+      setTimeout(() => navigate("/sign-in"), 1500);
+    } catch (err) {
+      const msg =
+        err.response?.data?.message || "Failed to reset password. Try again.";
+      setError(Array.isArray(msg) ? msg.join(", ") : msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,14 +85,20 @@ const CreateNewPassword = () => {
       </div>
 
       <div className="create-new-password-container">
-        <h2 className="create-new-password-head">Create New Password</h2>
+        <h1 className="create-new-password-head">Create New Password</h1>
 
         <div className="create-new-password-input-container">
           <div className="create-new-password-input-box">
+            <label htmlFor="cnp-password" className="sr-only">New Password</label>
             <input
+              id="cnp-password"
               className="create-new-password-input"
               type="password"
+              name="newPassword"
+              autoComplete="new-password"
               placeholder="New Password"
+              aria-invalid={!!error}
+              aria-describedby={error ? "cnp-error" : undefined}
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -97,10 +125,16 @@ const CreateNewPassword = () => {
           </div>
 
           <div className="create-new-password-input-box">
+            <label htmlFor="cnp-confirmpassword" className="sr-only">Re-enter Password</label>
             <input
+              id="cnp-confirmpassword"
               className="create-new-password-input"
               type="password"
+              name="confirmPassword"
+              autoComplete="new-password"
               placeholder="Re-enter Password"
+              aria-invalid={!!notMatch}
+              aria-describedby={notMatch ? "cnp-notmatch" : undefined}
               value={confirmPass}
               onChange={(e) => {
                 setConfirmPass(e.target.value);
@@ -112,12 +146,12 @@ const CreateNewPassword = () => {
           </div>
         </div>
 
-        {error && <p className="error-text">{error}</p>}
-        {notMatch && <p className="notmatch-text">{notMatch}</p>}
-        {success && <p className="success-text">{success}</p>}
+        {error && <p id="cnp-error" className="error-text" role="alert">{error}</p>}
+        {notMatch && <p id="cnp-notmatch" className="notmatch-text" role="alert">{notMatch}</p>}
+        {success && <p className="success-text" role="status">{success}</p>}
 
-        <button type="submit" className="create-new-password-submit">
-          Save
+        <button type="submit" className="create-new-password-submit" disabled={loading}>
+          {loading ? "Saving…" : "Save"}
         </button>
       </div>
     </form>

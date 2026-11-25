@@ -1,10 +1,47 @@
-  
-*{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-primary: #192a56;
+  --color-secondary: #e3ebff;
+  --color-error: rgb(238, 12, 12);
+  --radius-container: 40px;
+  --radius-input: 50px;
+  --radius-button: 25px;
+}
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
- }
-body{
-    background-color:  #e3ebff;   
 }
+
+html,
+body {
+  background-color: #e3ebff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Screen reader only — hides visually but keeps accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Global focus-visible for keyboard navigation accessibility */
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #4a7ce4;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(74, 124, 228, 0.2);
+}

@@ -14,7 +14,7 @@ const renderWithRouter = (ui) => {
 describe("Signuppage Component Tests", () => {
   test("renders signup heading correctly", () => {
     renderWithRouter(<Signuppage />);
-     const title = screen.getByRole("heading",{name:/sign up/i})
+    const title = screen.getByRole("heading", { name: /sign up/i });
     expect(title).toBeInTheDocument();
   });
 

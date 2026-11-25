@@ -13,15 +13,14 @@ function App() {
     
       <BrowserRouter>
       <Routes>
-        <Route path="/Signuppage" element={<Signuppage/>}></Route>
-        <Route path= "" element={<Signinpage/>}></Route>
-        <Route path= "/Signinpage" element={<Signinpage/>}></Route>
-        <Route path="/Dashboard" element={<Dashboard/>}></Route>
-        <Route path="/Samplepage" element={<Samplepage/>}></Route>
-        <Route path="/PasswordAssistance" element={<PasswordAssistance/>}></Route>
-        <Route path="/CreateNewPassword" element={<CreateNewPassword/>}></Route>
-        <Route path="/HomePage" element={<HomePage/>}></Route>
-        
+        <Route path="/" element={<Signinpage/>} />
+        <Route path="/sign-in" element={<Signinpage/>} />
+        <Route path="/sign-up" element={<Signuppage/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/sample" element={<Samplepage/>} />
+        <Route path="/password-assistance" element={<PasswordAssistance/>} />
+        <Route path="/create-new-password" element={<CreateNewPassword/>} />
+        <Route path="/home" element={<HomePage/>} />
         </Routes>
 
       </BrowserRouter>

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../../services/api";
 import logo from "../../assets/attrallogo.png";
 import google from "../../assets/google.png";
 import apple from "../../assets/apple.png";
@@ -7,7 +8,10 @@ import facebook from "../../assets/facebook.png";
 import "./Signuppage.css";
 
 const Signuppage = () => {
+  const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
   const handleClick = () => {
     setExpanded(!expanded);
   };
@@ -57,19 +61,35 @@ const Signuppage = () => {
   };
 
   // ---------------- SUBMIT HANDLER ----------------
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError("");
 
     if (validate()) {
-      console.log("Form submitted successfully");
-      alert("Signup Successful!");
+      setLoading(true);
+      try {
+        await api.post("/auth/register", {
+          name,
+          email,
+          phone,
+          password: createpassword,
+        });
+        navigate("/sign-in");
+      } catch (err) {
+        const msg =
+          err.response?.data?.message ||
+          "Registration failed. Please try again.";
+        setApiError(Array.isArray(msg) ? msg.join(", ") : msg);
+      } finally {
+        setLoading(false);
+      }
     } else {
       console.log("Form has errors");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} noValidate className="signuppage-form">
       <div className="Signuppage">
         <img className="signup-attral" src={logo} alt="attral" />
         <a href="https://techbrainnetworks.com/" className="signup-Poweredby">
@@ -82,72 +102,104 @@ const Signuppage = () => {
 
         {/* FULL NAME */}
         <div className="signup-input-box">
+          <label htmlFor="signup-name" className="sr-only">Full Name</label>
           <input
+            id="signup-name"
             className="signup-input"
             type="text"
+            name="name"
+            autoComplete="name"
             placeholder="Enter your full name"
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? "name-error" : undefined}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          {errors.name && <span className="error">{errors.name}</span>}
+          {errors.name && <span id="name-error" className="error" role="alert">{errors.name}</span>}
         </div>
 
         {/* EMAIL */}
         <div className="signup-input-box">
+          <label htmlFor="signup-email" className="sr-only">Email Address</label>
           <input
+            id="signup-email"
             className="signup-input"
-            type="text"
+            type="email"
+            name="email"
+            autoComplete="email"
             placeholder="Enter your email ID"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "email-error" : undefined}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          {errors.email && <span className="error">{errors.email}</span>}
+          {errors.email && <span id="email-error" className="error" role="alert">{errors.email}</span>}
         </div>
 
         {/* PHONE */}
         <div className="signup-input-box">
+          <label htmlFor="signup-phone" className="sr-only">Phone Number</label>
           <input
+            id="signup-phone"
             className="signup-input"
-            type="text"
+            type="tel"
+            name="phone"
+            autoComplete="tel"
+            inputMode="numeric"
             placeholder="Enter your phone number"
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? "phone-error" : undefined}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-          {errors.phone && <span className="error">{errors.phone}</span>}
+          {errors.phone && <span id="phone-error" className="error" role="alert">{errors.phone}</span>}
         </div>
 
         {/* PASSWORD */}
         <div className="signup-input-box">
+          <label htmlFor="signup-password" className="sr-only">Create Password</label>
           <input
+            id="signup-password"
             className="signup-input"
             type="password"
+            name="password"
+            autoComplete="new-password"
             placeholder="Create password"
+            aria-invalid={!!errors.createpassword}
+            aria-describedby={errors.createpassword ? "createpassword-error" : undefined}
             value={createpassword}
             onChange={(e) => setCreatepassword(e.target.value)}
           />
           {errors.createpassword && (
-            <span className="error">{errors.createpassword}</span>
+            <span id="createpassword-error" className="error" role="alert">{errors.createpassword}</span>
           )}
         </div>
 
         {/* CONFIRM PASSWORD */}
         <div className="signup-input-box">
+          <label htmlFor="signup-confirmpassword" className="sr-only">Confirm Password</label>
           <input
+            id="signup-confirmpassword"
             className="signup-input"
             type="password"
+            name="confirmPassword"
+            autoComplete="new-password"
             placeholder="Confirm password"
+            aria-invalid={!!errors.confirmpassword}
+            aria-describedby={errors.confirmpassword ? "confirmpassword-error" : undefined}
             value={confirmpassword}
             onChange={(e) => setConfirmpassword(e.target.value)}
           />
           {errors.confirmpassword && (
-            <span className="error">{errors.confirmpassword}</span>
+            <span id="confirmpassword-error" className="error" role="alert">{errors.confirmpassword}</span>
           )}
         </div>
 
         {/* BUTTON */}
         <div className="signup-input-box">
-          <button type="submit" className="signup-button">
-            Sign up
+          {apiError && <span className="error" role="alert">{apiError}</span>}
+          <button type="submit" className="signup-button" disabled={loading}>
+            {loading ? "Signing up…" : "Sign up"}
           </button>
         </div>
 
@@ -167,12 +219,8 @@ const Signuppage = () => {
         </div>
 
         <span className="already">
-          Already have an account?
-          <Link
-            to="/Signinpage"
-            className="signin"
-            onClick={handleClick}
-          >
+          Already have an account?{" "}
+          <Link to="/sign-in" className="signin" onClick={handleClick}>
             {expanded ? "Close" : "Sign in"}
           </Link>
         </span>
