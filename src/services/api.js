@@ -1,5 +1,5 @@
 const RAW_BASE_URL = (
-  import.meta.env.VITE_API_URL
+  import.meta.env.VITE_API_URL || 'https://aattral-v1-backend.onrender.com/api'
 ).trim().replace(/\/+$/, '');
 
 // Automatically ensure the base URL ends with '/api'
