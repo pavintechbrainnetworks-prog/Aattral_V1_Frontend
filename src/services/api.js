@@ -1,5 +1,11 @@
-const RAW_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-export const API_BASE_URL = RAW_BASE_URL.replace(/\/+$/, '');
+const RAW_BASE_URL = (
+  import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+).trim().replace(/\/+$/, '');
+
+// Automatically ensure the base URL ends with '/api'
+export const API_BASE_URL = RAW_BASE_URL.endsWith('/api')
+  ? RAW_BASE_URL
+  : `${RAW_BASE_URL}/api`;
 
 export const getAuthToken = () => localStorage.getItem('token');
 export const setAuthToken = (token) => {
@@ -30,7 +36,8 @@ export const logout = () => {
 };
 
 export async function request(endpoint, options = {}) {
-  const url = `${API_BASE_URL}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const url = `${API_BASE_URL}${cleanEndpoint}`;
   const token = getAuthToken();
 
   const headers = {

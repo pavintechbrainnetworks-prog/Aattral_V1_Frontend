@@ -34,8 +34,9 @@ const Signuppage = () => {
       setError("Please enter your email.");
       return;
     }
-    if (!phone.trim()) {
-      setError("Please enter your phone number.");
+    const cleanPhone = phone.trim().replace(/\D/g, '');
+    if (!/^\d{10}$/.test(cleanPhone)) {
+      setError("Phone number must be exactly 10 digits.");
       return;
     }
     if (createpassword.length < 6) {
@@ -52,7 +53,7 @@ const Signuppage = () => {
       const res = await authApi.register({
         name: name.trim(),
         email: email.trim(),
-        phone: phone.trim(),
+        phone: cleanPhone,
         password: createpassword,
       });
 
