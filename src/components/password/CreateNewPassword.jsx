@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import "./CreateNewPassword.css";
 import logo from "../../assets/attrallogo.png";
+import { useLocation, useNavigate } from "react-router-dom";
+import { authApi } from "../../services/api";
 
 const CreateNewPassword = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const emailFromState = location.state?.email || "";
+  const otpFromState = location.state?.otp || "";
+
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const [error, setError] = useState("");
   const [notMatch, setNotMatch] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validatePassword = (pass) => {
     const minLength = pass.length >= 8 && pass.length <= 64;
@@ -21,9 +29,10 @@ const CreateNewPassword = () => {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setNotMatch("");
     setSuccess("");
 
     if (!validatePassword(password)) {
@@ -38,9 +47,23 @@ const CreateNewPassword = () => {
       return;
     }
 
-    setSuccess("Password successfully updated!");
-    console.log("New password saved:", password);
-    // TODO: Call backend API here
+    if (!emailFromState || !otpFromState) {
+      setError("Missing email or OTP verification. Please start from Password Assistance.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await authApi.resetPassword(emailFromState, otpFromState, password);
+      setSuccess("Password successfully updated! Redirecting to sign in...");
+      setTimeout(() => {
+        navigate("/Signinpage");
+      }, 1500);
+    } catch (err) {
+      setError(err.message || "Failed to reset password. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,7 +85,8 @@ const CreateNewPassword = () => {
 
         <div className="create-new-password-input-container">
           <div className="create-new-password-input-box">
-            <input className="create-new-password-input"
+            <input
+              className="create-new-password-input"
               type="password"
               placeholder="New Password"
               value={password}
@@ -86,7 +110,8 @@ const CreateNewPassword = () => {
           </div>
 
           <div className="create-new-password-input-box">
-            <input className="create-new-password-input"
+            <input
+              className="create-new-password-input"
               type="password"
               placeholder="Re-enter Password"
               value={confirmPass}
@@ -98,10 +123,10 @@ const CreateNewPassword = () => {
 
         {error && <p className="error-text">{error}</p>}
         {notMatch && <p className="notmatch-text">{notMatch}</p>}
-        {success && <p className="success-text">{success}</p>}
+        {success && <p style={{ color: "#38a169", fontSize: "14px", margin: "8px 0", textAlign: "center" }}>{success}</p>}
 
-        <button type="submit" className="create-new-password-submit">
-          Save
+        <button type="submit" className="create-new-password-submit" disabled={loading}>
+          {loading ? "Updating..." : "Submit"}
         </button>
       </div>
     </form>
