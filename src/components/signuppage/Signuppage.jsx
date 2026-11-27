@@ -76,8 +76,10 @@ const Signuppage = () => {
         });
         navigate("/sign-in");
       } catch (err) {
+        console.error("Registration error:", err);
         const msg =
           err.response?.data?.message ||
+          err.message ||
           "Registration failed. Please try again.";
         setApiError(Array.isArray(msg) ? msg.join(", ") : msg);
       } finally {

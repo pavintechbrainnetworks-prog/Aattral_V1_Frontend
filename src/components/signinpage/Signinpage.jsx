@@ -39,8 +39,11 @@ export const Signinpage = () => {
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/home");
     } catch (err) {
+      console.error("Login error:", err);
       const msg =
-        err.response?.data?.message || "Login failed. Please try again.";
+        err.response?.data?.message ||
+        err.message ||
+        "Login failed. Please try again.";
       setApiError(Array.isArray(msg) ? msg.join(", ") : msg);
     } finally {
       setLoading(false);

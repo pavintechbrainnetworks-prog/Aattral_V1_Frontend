@@ -1,0 +1,162 @@
+/* Markdown Rendering Styles for Aattral AI */
+.markdown-content {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #1e293b;
+  word-break: break-word;
+}
+
+.markdown-content p {
+  margin: 0 0 14px 0;
+}
+
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
+  color: #0f172a;
+  font-weight: 700;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.markdown-content h1 { font-size: 1.5rem; }
+.markdown-content h2 { font-size: 1.3rem; }
+.markdown-content h3 { font-size: 1.15rem; }
+.markdown-content h4 { font-size: 1rem; }
+
+.markdown-content ul,
+.markdown-content ol {
+  margin: 0 0 14px 22px;
+  padding: 0;
+}
+
+.markdown-content li {
+  margin-bottom: 6px;
+}
+
+.markdown-content blockquote {
+  border-left: 3px solid #192a56;
+  margin: 12px 0;
+  padding: 8px 14px;
+  background: #f1f5f9;
+  border-radius: 0 8px 8px 0;
+  color: #334155;
+  font-style: italic;
+}
+
+.markdown-link {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.markdown-link:hover {
+  color: #1d4ed8;
+}
+
+.inline-code {
+  background: #e2e8f0;
+  color: #0f172a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', 'Fira Code', monospace;
+  font-size: 0.9em;
+}
+
+/* Code Block with Header and Copy Button */
+.code-block-container {
+  margin: 16px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0f172a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+}
+
+.code-lang {
+  font-size: 12px;
+  font-family: monospace;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.code-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.code-copy-btn:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+.code-block-pre {
+  margin: 0;
+  padding: 14px;
+  overflow-x: auto;
+  font-family: 'Consolas', 'Fira Code', monospace;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #f8fafc;
+}
+
+/* Tables */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+.markdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+}
+
+.markdown-table th {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.markdown-table td {
+  border: 1px solid #e2e8f0;
+  padding: 8px 14px;
+  color: #334155;
+}
+
+.markdown-table tr:nth-child(even) {
+  background: #fbfcfe;
+}
