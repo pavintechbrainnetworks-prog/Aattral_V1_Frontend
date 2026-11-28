@@ -71,6 +71,7 @@ export const authApi = {
   register: (payload) => api.post('/auth/register', payload),
   login: (payload) => api.post('/auth/login', payload),
   getProfile: () => api.get('/auth/me'),
+  updateProfile: (payload) => api.patch('/auth/me', payload),
   sendOtp: (email) => api.post('/auth/send-otp', { email }),
   verifyOtp: (email, otp) => api.post('/auth/verify-otp', { email, otp }),
   resetPassword: (email, otp, newPassword) => api.post('/auth/reset-password', { email, otp, newPassword }),

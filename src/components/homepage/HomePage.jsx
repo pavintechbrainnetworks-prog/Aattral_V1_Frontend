@@ -13,7 +13,7 @@ import mic from '../../assets/mic.png';
 import plus from '../../assets/plus.png';
 import logo from '../../assets/attrallogo1.png';
 import MarkdownRenderer from './MarkdownRenderer';
-import { chatApi, conversationsApi, getAuthUser, logout } from '../../services/api';
+import { chatApi, conversationsApi, getAuthUser, authApi, logout } from '../../services/api';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -38,6 +38,16 @@ export default function HomePage() {
 
   const [plusOpen, setPlusOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+
+  // Profile modal state
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [profileData, setProfileData] = useState({ name: '', email: '', phone: '' });
+  const [profileEdit, setProfileEdit] = useState(false);
+  const [profileForm, setProfileForm] = useState({ name: '', phone: '' });
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileError, setProfileError] = useState('');
+  const [profileSuccess, setProfileSuccess] = useState('');
+
   const hiddenFileRef = useRef(null);
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
@@ -269,6 +279,51 @@ export default function HomePage() {
     }
   }
 
+  async function openProfile() {
+    setProfileOpen(true);
+    setProfileEdit(false);
+    setProfileError('');
+    setProfileSuccess('');
+    try {
+      const res = await authApi.getProfile();
+      const u = res.data?.data?.user || {};
+      setProfileData({
+        name: u.name || username || '',
+        email: u.email || '',
+        phone: u.phone || '',
+      });
+      setProfileForm({ name: u.name || '', phone: u.phone || '' });
+    } catch {
+      setProfileData({ name: username, email: '', phone: '' });
+      setProfileForm({ name: username, phone: '' });
+    }
+  }
+
+  async function saveProfile() {
+    setProfileSaving(true);
+    setProfileError('');
+    setProfileSuccess('');
+    try {
+      const payload = {};
+      if (profileForm.name.trim()) payload.name = profileForm.name.trim();
+      if (profileForm.phone.trim()) payload.phone = profileForm.phone.trim();
+      const res = await authApi.updateProfile(payload);
+      const updated = res.data?.data?.user || res.data?.data || {};
+      setProfileData(d => ({
+        ...d,
+        name: updated.name || profileForm.name || d.name,
+        phone: updated.phone || profileForm.phone || d.phone,
+      }));
+      setUsername(updated.name || profileForm.name || username);
+      setProfileSuccess('Profile updated successfully!');
+      setProfileEdit(false);
+    } catch (err) {
+      setProfileError(err.response?.data?.message || 'Failed to update profile.');
+    } finally {
+      setProfileSaving(false);
+    }
+  }
+
   function onProfileClick(action) {
     if (action === "logout") {
       logout();
@@ -280,7 +335,7 @@ export default function HomePage() {
       navigate("/sign-in");
     }
     if (action === "profile") {
-      alert(`Logged in as: ${username}`);
+      openProfile();
     }
     if (action === "settings") {
       alert("Settings: Connected to Aattral AI & MongoDB.");
@@ -668,9 +723,12 @@ export default function HomePage() {
           <div className="avatar" title={isLoggedIn ? username : "Guest"}>
             {isLoggedIn ? (username[0] || "U").toUpperCase() : "G"}
             <div className="profile-menu">
-              <button onClick={() => onProfileClick("profile")}>Profile</button>
-              <button onClick={() => onProfileClick("settings")}>Settings</button>
-              <button onClick={() => onProfileClick("logout")}>Logout</button>
+              <button onClick={() => onProfileClick("profile")}>
+                <span className="profile-menu-icon">👤</span> Profile
+              </button>
+              <button onClick={() => onProfileClick("logout")} className="profile-logout-btn">
+                <span className="profile-menu-icon">🚪</span> Logout
+              </button>
             </div>
           </div>
         </div>
@@ -889,44 +947,43 @@ export default function HomePage() {
                       <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
                     </button>
                   </div>
-
-                  {/* Mobile 3-dot more menu */}
-                  <div className="more-wrapper">
-                    <button
-                      className="more-btn"
-                      onClick={() => setMoreOpen((o) => !o)}
-                      title="More options"
-                      aria-label="More options"
-                    >
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </button>
-                    {moreOpen && (
-                      <div className="more-menu">
-                        <button
-                          className={`more-menu-item ${activeMode === 'deep_research' ? 'active-mode' : ''}`}
-                          onClick={() => { toggleMode('deep_research'); setMoreOpen(false); }}
-                        >
-                          <img className="chat-main-icons" src={deepsearch} alt="deepsearch" /> Deep Research
-                        </button>
-                        <button
-                          className={`more-menu-item ${activeMode === 'create_image' ? 'active-mode' : ''}`}
-                          onClick={() => { toggleMode('create_image'); setMoreOpen(false); }}
-                        >
-                          <img className="chat-main-icons" src={imagesearch} alt="imagesearch" /> Create Image
-                        </button>
-                        <button
-                          className={`more-menu-item ${activeMode === 'web_search' ? 'active-mode' : ''}`}
-                          onClick={() => { toggleMode('web_search'); setMoreOpen(false); }}
-                        >
-                          <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
-                        </button>
-                      </div>
-                    )}
-                  </div>
                 </div>
 
+                {/* Mobile 3-dot more menu — outside input-icons to avoid overflow clipping */}
+                <div className="more-wrapper">
+                  <button
+                    className="more-btn"
+                    onClick={() => setMoreOpen((o) => !o)}
+                    title="More options"
+                    aria-label="More options"
+                  >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </button>
+                  {moreOpen && (
+                    <div className="more-menu">
+                      <button
+                        className={`more-menu-item ${activeMode === 'deep_research' ? 'active-mode' : ''}`}
+                        onClick={() => { toggleMode('deep_research'); setMoreOpen(false); }}
+                      >
+                        <img className="chat-main-icons" src={deepsearch} alt="deepsearch" /> Deep Research
+                      </button>
+                      <button
+                        className={`more-menu-item ${activeMode === 'create_image' ? 'active-mode' : ''}`}
+                        onClick={() => { toggleMode('create_image'); setMoreOpen(false); }}
+                      >
+                        <img className="chat-main-icons" src={imagesearch} alt="imagesearch" /> Create Image
+                      </button>
+                      <button
+                        className={`more-menu-item ${activeMode === 'web_search' ? 'active-mode' : ''}`}
+                        onClick={() => { toggleMode('web_search'); setMoreOpen(false); }}
+                      >
+                        <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
+                      </button>
+                    </div>
+                  )}
+                </div>
                 {searchText.trim().length > 0 ? (
                   <button
                     className="send-active-btn"
@@ -1037,44 +1094,43 @@ export default function HomePage() {
                       <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
                     </button>
                   </div>
-
-                  {/* Mobile 3-dot more menu */}
-                  <div className="more-wrapper">
-                    <button
-                      className="more-btn"
-                      onClick={() => setMoreOpen((o) => !o)}
-                      title="More options"
-                      aria-label="More options"
-                    >
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </button>
-                    {moreOpen && (
-                      <div className="more-menu">
-                        <button
-                          className={`more-menu-item ${activeMode === 'deep_research' ? 'active-mode' : ''}`}
-                          onClick={() => { toggleMode('deep_research'); setMoreOpen(false); }}
-                        >
-                          <img className="chat-main-icons" src={deepsearch} alt="deepsearch" /> Deep Research
-                        </button>
-                        <button
-                          className={`more-menu-item ${activeMode === 'create_image' ? 'active-mode' : ''}`}
-                          onClick={() => { toggleMode('create_image'); setMoreOpen(false); }}
-                        >
-                          <img className="chat-main-icons" src={imagesearch} alt="imagesearch" /> Create Image
-                        </button>
-                        <button
-                          className={`more-menu-item ${activeMode === 'web_search' ? 'active-mode' : ''}`}
-                          onClick={() => { toggleMode('web_search'); setMoreOpen(false); }}
-                        >
-                          <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
-                        </button>
-                      </div>
-                    )}
-                  </div>
                 </div>
 
+                {/* Mobile 3-dot more menu — outside input-icons to avoid overflow clipping */}
+                <div className="more-wrapper">
+                  <button
+                    className="more-btn"
+                    onClick={() => setMoreOpen((o) => !o)}
+                    title="More options"
+                    aria-label="More options"
+                  >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </button>
+                  {moreOpen && (
+                    <div className="more-menu">
+                      <button
+                        className={`more-menu-item ${activeMode === 'deep_research' ? 'active-mode' : ''}`}
+                        onClick={() => { toggleMode('deep_research'); setMoreOpen(false); }}
+                      >
+                        <img className="chat-main-icons" src={deepsearch} alt="deepsearch" /> Deep Research
+                      </button>
+                      <button
+                        className={`more-menu-item ${activeMode === 'create_image' ? 'active-mode' : ''}`}
+                        onClick={() => { toggleMode('create_image'); setMoreOpen(false); }}
+                      >
+                        <img className="chat-main-icons" src={imagesearch} alt="imagesearch" /> Create Image
+                      </button>
+                      <button
+                        className={`more-menu-item ${activeMode === 'web_search' ? 'active-mode' : ''}`}
+                        onClick={() => { toggleMode('web_search'); setMoreOpen(false); }}
+                      >
+                        <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
+                      </button>
+                    </div>
+                  )}
+                </div>
                 {searchText.trim().length > 0 ? (
                   <button
                     className="send-active-btn"
@@ -1144,6 +1200,109 @@ export default function HomePage() {
               <button onClick={captureFromCamera}>Capture</button>
               <button onClick={closeCamera}>Close</button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================
+          PROFILE MODAL
+          ======================================================== */}
+      {profileOpen && (
+        <div className="profile-modal-overlay" onClick={() => setProfileOpen(false)}>
+          <div className="profile-modal" onClick={e => e.stopPropagation()}>
+
+            {/* Header */}
+            <div className="profile-modal-header">
+              <div className="profile-modal-avatar">
+                {(profileData.name[0] || 'U').toUpperCase()}
+              </div>
+              <div>
+                <h2 className="profile-modal-name">{profileData.name || 'User'}</h2>
+                <p className="profile-modal-sub">{isLoggedIn ? 'Aattral Member' : 'Guest'}</p>
+              </div>
+              <button className="profile-modal-close" onClick={() => setProfileOpen(false)}>✕</button>
+            </div>
+
+            <div className="profile-modal-divider" />
+
+            {/* View Mode */}
+            {!profileEdit ? (
+              <div className="profile-modal-body">
+                <div className="profile-field">
+                  <span className="profile-field-label">Name</span>
+                  <span className="profile-field-value">{profileData.name || '—'}</span>
+                </div>
+                <div className="profile-field">
+                  <span className="profile-field-label">Email</span>
+                  <span className="profile-field-value">{profileData.email || '—'}</span>
+                </div>
+                <div className="profile-field">
+                  <span className="profile-field-label">Phone</span>
+                  <span className="profile-field-value">{profileData.phone || '—'}</span>
+                </div>
+
+                {profileSuccess && (
+                  <p className="profile-success">{profileSuccess}</p>
+                )}
+
+                <div className="profile-modal-actions">
+                  <button className="profile-edit-btn" onClick={() => { setProfileEdit(true); setProfileSuccess(''); setProfileError(''); }}>
+                    ✏️ Edit Profile
+                  </button>
+                  <button className="profile-logout-modal-btn" onClick={() => onProfileClick('logout')}>
+                    🚪 Logout
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* Edit Mode */
+              <div className="profile-modal-body">
+                <div className="profile-form-group">
+                  <label className="profile-form-label">Name</label>
+                  <input
+                    className="profile-form-input"
+                    type="text"
+                    value={profileForm.name}
+                    onChange={e => setProfileForm(f => ({ ...f, name: e.target.value }))}
+                    placeholder="Enter your name"
+                  />
+                </div>
+                <div className="profile-form-group">
+                  <label className="profile-form-label">Email</label>
+                  <input
+                    className="profile-form-input"
+                    type="email"
+                    value={profileData.email}
+                    disabled
+                    placeholder="Email cannot be changed"
+                  />
+                  <span className="profile-form-hint">Email cannot be changed</span>
+                </div>
+                <div className="profile-form-group">
+                  <label className="profile-form-label">Phone Number</label>
+                  <input
+                    className="profile-form-input"
+                    type="tel"
+                    value={profileForm.phone}
+                    onChange={e => setProfileForm(f => ({ ...f, phone: e.target.value }))}
+                    placeholder="10-digit phone number"
+                    maxLength={10}
+                  />
+                </div>
+
+                {profileError && <p className="profile-error">{profileError}</p>}
+                {profileSuccess && <p className="profile-success">{profileSuccess}</p>}
+
+                <div className="profile-modal-actions">
+                  <button className="profile-save-btn" onClick={saveProfile} disabled={profileSaving}>
+                    {profileSaving ? 'Saving…' : '💾 Save Changes'}
+                  </button>
+                  <button className="profile-cancel-btn" onClick={() => { setProfileEdit(false); setProfileError(''); }}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

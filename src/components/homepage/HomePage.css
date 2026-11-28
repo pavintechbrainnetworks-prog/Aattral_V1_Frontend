@@ -480,10 +480,291 @@ button {
   font-size: 14px;
   color: #192a56;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
 }
 
 .profile-menu button:hover {
   background: #f0f4ff;
+}
+
+.profile-logout-btn {
+  color: #dc2626 !important;
+  border-top: 1px solid #e3ebff !important;
+}
+
+/* =============================================
+   PROFILE MODAL
+   ============================================= */
+.profile-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(25, 42, 86, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.profile-modal {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(25, 42, 86, 0.25);
+  overflow: hidden;
+  animation: profileSlideIn 0.22s ease;
+}
+
+@keyframes profileSlideIn {
+  from { opacity: 0; transform: scale(0.95) translateY(-12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.profile-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 24px 24px 20px;
+  background: linear-gradient(135deg, #192a56 0%, #2d4a8e 100%);
+  position: relative;
+}
+
+.profile-modal-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e3ebff;
+  color: #192a56;
+  font-size: 26px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 3px solid rgba(255,255,255,0.4);
+}
+
+.profile-modal-name {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+
+.profile-modal-sub {
+  color: rgba(255,255,255,0.72);
+  font-size: 13px;
+  margin: 0;
+}
+
+.profile-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.profile-modal-close:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.profile-modal-divider {
+  height: 1px;
+  background: #e3ebff;
+}
+
+.profile-modal-body {
+  padding: 20px 24px 24px;
+}
+
+/* View mode fields */
+.profile-field {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f4ff;
+  gap: 12px;
+}
+
+.profile-field:last-of-type {
+  border-bottom: none;
+}
+
+.profile-field-label {
+  width: 90px;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7fa3;
+}
+
+.profile-field-value {
+  font-size: 15px;
+  color: #192a56;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+/* Edit mode form */
+.profile-form-group {
+  margin-bottom: 16px;
+}
+
+.profile-form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7fa3;
+  margin-bottom: 6px;
+}
+
+.profile-form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #c8d6f0;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #192a56;
+  background: #f8faff;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.profile-form-input:focus {
+  border-color: #192a56;
+  background: #ffffff;
+}
+
+.profile-form-input:disabled {
+  background: #f0f4ff;
+  color: #9aabc4;
+  cursor: not-allowed;
+}
+
+.profile-form-hint {
+  font-size: 11px;
+  color: #9aabc4;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Feedback messages */
+.profile-error {
+  color: #dc2626;
+  font-size: 13px;
+  margin: 8px 0;
+  padding: 8px 12px;
+  background: #fee2e2;
+  border-radius: 8px;
+}
+
+.profile-success {
+  color: #15803d;
+  font-size: 13px;
+  margin: 8px 0;
+  padding: 8px 12px;
+  background: #dcfce7;
+  border-radius: 8px;
+}
+
+/* Action buttons */
+.profile-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.profile-edit-btn {
+  flex: 1;
+  padding: 11px 16px;
+  background: #192a56;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-edit-btn:hover {
+  background: #1e3470;
+}
+
+.profile-logout-modal-btn {
+  padding: 11px 16px;
+  background: transparent;
+  color: #dc2626;
+  border: 2px solid #dc2626;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.profile-logout-modal-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.profile-save-btn {
+  flex: 1;
+  padding: 11px 16px;
+  background: #192a56;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.profile-save-btn:not(:disabled):hover {
+  background: #1e3470;
+}
+
+.profile-cancel-btn {
+  padding: 11px 16px;
+  background: #f0f4ff;
+  color: #192a56;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-cancel-btn:hover {
+  background: #e3ebff;
 }
 
 /* Page heading */
@@ -605,9 +886,12 @@ button {
 
 /* ---- 3-dot more menu (mobile only) ---- */
 .more-wrapper {
-  position: relative;
-  flex-shrink: 0;
+  position: absolute;
+  bottom: 2px;
+  left: 40px; /* after plus-btn area */
   display: none; /* hidden on desktop, shown via media query */
+  align-items: center;
+  z-index: 35;
 }
 
 .more-btn {
@@ -644,7 +928,7 @@ button {
   box-shadow: 0 6px 24px rgba(25, 42, 86, 0.18);
   display: flex;
   flex-direction: column;
-  z-index: 40;
+  z-index: 9999;
   overflow: hidden;
 }
 
@@ -1035,6 +1319,12 @@ button {
   .more-wrapper {
     display: flex;
     align-items: center;
+    position: relative;
+  }
+
+  /* Allow the dropdown to escape the overflow-x:auto clip */
+  .input-icons {
+    overflow: visible;
   }
 
   .tags {
