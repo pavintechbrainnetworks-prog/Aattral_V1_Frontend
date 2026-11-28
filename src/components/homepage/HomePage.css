@@ -603,6 +603,81 @@ button {
   flex-shrink: 0;
 }
 
+/* ---- 3-dot more menu (mobile only) ---- */
+.more-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  display: none; /* hidden on desktop, shown via media query */
+}
+
+.more-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  background: transparent;
+  border: 2px solid #192a56;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.more-btn span {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #192a56;
+}
+
+.more-menu {
+  position: absolute;
+  bottom: 44px;
+  left: 0;
+  min-width: 170px;
+  background: #e3ebff;
+  border: 2px solid #192a56;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(25, 42, 86, 0.18);
+  display: flex;
+  flex-direction: column;
+  z-index: 40;
+  overflow: hidden;
+}
+
+.more-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  background: transparent;
+  border: none;
+  color: #192a56;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.more-menu-item:hover {
+  background: rgba(25, 42, 86, 0.08);
+}
+
+.more-menu-item.active-mode {
+  background: #192a56;
+  color: #e3ebff;
+}
+
+.more-menu-item img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
 /* Small action buttons */
 .sbutton {
   display: flex;
@@ -856,6 +931,7 @@ button {
 
   .logo {
     left: 72px;
+    margin-left: 50px;
     font-size: 26px;
     white-space: nowrap;
     overflow: visible;
@@ -949,6 +1025,16 @@ button {
   .plus-icon {
     width: 22px;
     height: 22px;
+  }
+
+  /* Show 3-dot menu, hide regular action buttons */
+  .action-buttons {
+    display: none;
+  }
+
+  .more-wrapper {
+    display: flex;
+    align-items: center;
   }
 
   .tags {

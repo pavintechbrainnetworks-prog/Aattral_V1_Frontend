@@ -37,6 +37,7 @@ export default function HomePage() {
   const chatBottomRef = useRef(null);
 
   const [plusOpen, setPlusOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const hiddenFileRef = useRef(null);
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
@@ -888,6 +889,42 @@ export default function HomePage() {
                       <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
                     </button>
                   </div>
+
+                  {/* Mobile 3-dot more menu */}
+                  <div className="more-wrapper">
+                    <button
+                      className="more-btn"
+                      onClick={() => setMoreOpen((o) => !o)}
+                      title="More options"
+                      aria-label="More options"
+                    >
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </button>
+                    {moreOpen && (
+                      <div className="more-menu">
+                        <button
+                          className={`more-menu-item ${activeMode === 'deep_research' ? 'active-mode' : ''}`}
+                          onClick={() => { toggleMode('deep_research'); setMoreOpen(false); }}
+                        >
+                          <img className="chat-main-icons" src={deepsearch} alt="deepsearch" /> Deep Research
+                        </button>
+                        <button
+                          className={`more-menu-item ${activeMode === 'create_image' ? 'active-mode' : ''}`}
+                          onClick={() => { toggleMode('create_image'); setMoreOpen(false); }}
+                        >
+                          <img className="chat-main-icons" src={imagesearch} alt="imagesearch" /> Create Image
+                        </button>
+                        <button
+                          className={`more-menu-item ${activeMode === 'web_search' ? 'active-mode' : ''}`}
+                          onClick={() => { toggleMode('web_search'); setMoreOpen(false); }}
+                        >
+                          <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {searchText.trim().length > 0 ? (
@@ -999,6 +1036,42 @@ export default function HomePage() {
                     >
                       <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
                     </button>
+                  </div>
+
+                  {/* Mobile 3-dot more menu */}
+                  <div className="more-wrapper">
+                    <button
+                      className="more-btn"
+                      onClick={() => setMoreOpen((o) => !o)}
+                      title="More options"
+                      aria-label="More options"
+                    >
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </button>
+                    {moreOpen && (
+                      <div className="more-menu">
+                        <button
+                          className={`more-menu-item ${activeMode === 'deep_research' ? 'active-mode' : ''}`}
+                          onClick={() => { toggleMode('deep_research'); setMoreOpen(false); }}
+                        >
+                          <img className="chat-main-icons" src={deepsearch} alt="deepsearch" /> Deep Research
+                        </button>
+                        <button
+                          className={`more-menu-item ${activeMode === 'create_image' ? 'active-mode' : ''}`}
+                          onClick={() => { toggleMode('create_image'); setMoreOpen(false); }}
+                        >
+                          <img className="chat-main-icons" src={imagesearch} alt="imagesearch" /> Create Image
+                        </button>
+                        <button
+                          className={`more-menu-item ${activeMode === 'web_search' ? 'active-mode' : ''}`}
+                          onClick={() => { toggleMode('web_search'); setMoreOpen(false); }}
+                        >
+                          <img className="chat-main-icons" src={websearch} alt="websearch" /> Web Search
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
 
