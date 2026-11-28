@@ -50,7 +50,8 @@ export default function HomePage() {
   const [profileError, setProfileError] = useState('');
   const [profileSuccess, setProfileSuccess] = useState('');
 
-  const hiddenFileRef = useRef(null);
+  const hiddenFileRef = useRef(null);   // All files
+  const hiddenMediaRef = useRef(null);  // Images & videos only
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
   const cameraVideoRef = useRef(null);
@@ -162,6 +163,10 @@ export default function HomePage() {
 
   function openFilePicker() {
     if (hiddenFileRef.current) hiddenFileRef.current.click();
+  }
+
+  function openMediaPicker() {
+    if (hiddenMediaRef.current) hiddenMediaRef.current.click();
   }
 
   function removeUploaded(id) {
@@ -567,6 +572,15 @@ export default function HomePage() {
           accept="image/*,video/*,application/pdf,*/*"
           style={{ display: "none" }}
         />
+        <input
+          ref={hiddenMediaRef}
+          className="file-input"
+          type="file"
+          onChange={handleFileInput}
+          multiple
+          accept="image/*,video/*"
+          style={{ display: "none" }}
+        />
 
         {sidebarOpen ? (
           /* OPEN STATE */
@@ -916,27 +930,29 @@ export default function HomePage() {
                         <button
                           className="plus-menu-item"
                           onClick={() => {
+                            openMediaPicker();
+                            setPlusOpen(false);
+                          }}
+                        >
+                          <span className="plus-menu-icon">🖼️</span> Add media
+                        </button>
+                        <button
+                          className="plus-menu-item"
+                          onClick={() => {
                             openFilePicker();
                             setPlusOpen(false);
                           }}
                         >
-                          Add photos & files
+                          <span className="plus-menu-icon">📁</span> Add files
                         </button>
                         <button
-                          onClick={() => {
-                            takeScreenshot();
-                            setPlusOpen(false);
-                          }}
-                        >
-                          Screenshot
-                        </button>
-                        <button
+                          className="plus-menu-item"
                           onClick={() => {
                             openCamera();
                             setPlusOpen(false);
                           }}
                         >
-                          Take photo
+                          <span className="plus-menu-icon">📷</span> Take photo
                         </button>
                       </div>
                     )}
@@ -1063,27 +1079,29 @@ export default function HomePage() {
                         <button
                           className="plus-menu-item"
                           onClick={() => {
+                            openMediaPicker();
+                            setPlusOpen(false);
+                          }}
+                        >
+                          <span className="plus-menu-icon">🖼️</span> Add media
+                        </button>
+                        <button
+                          className="plus-menu-item"
+                          onClick={() => {
                             openFilePicker();
                             setPlusOpen(false);
                           }}
                         >
-                          Add photos & files
+                          <span className="plus-menu-icon">📁</span> Add files
                         </button>
                         <button
-                          onClick={() => {
-                            takeScreenshot();
-                            setPlusOpen(false);
-                          }}
-                        >
-                          Screenshot
-                        </button>
-                        <button
+                          className="plus-menu-item"
                           onClick={() => {
                             openCamera();
                             setPlusOpen(false);
                           }}
                         >
-                          Take photo
+                          <span className="plus-menu-icon">📷</span> Take photo
                         </button>
                       </div>
                     )}

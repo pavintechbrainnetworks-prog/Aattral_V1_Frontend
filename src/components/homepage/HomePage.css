@@ -832,8 +832,7 @@ button {
   align-items: center;
   gap: 10px;
   max-width: calc(100% - 65px);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible;
   padding-bottom: 2px;
 }
 
@@ -867,18 +866,22 @@ button {
   background-color: #e3ebff;
   bottom: 45px;
   left: 0;
-  min-width: 200px;
-  border-radius: 10px;
-  border: 1px solid #192a56;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  min-width: 185px;
+  border-radius: 12px;
+  border: 2px solid #192a56;
+  box-shadow: 0 6px 24px rgba(25, 42, 86, 0.18);
   display: flex;
   flex-direction: column;
-  z-index: 30;
+  z-index: 40;
+  overflow: hidden;
 }
 
 .plus-menu button,
 .plus-menu-item {
-  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
   border: 0;
   background: transparent;
   text-align: left;
@@ -886,6 +889,12 @@ button {
   font-weight: 600;
   font-size: 13px;
   cursor: pointer;
+  white-space: nowrap;
+}
+
+.plus-menu-icon {
+  font-size: 15px;
+  line-height: 1;
 }
 
 .plus-menu button:hover {
