@@ -411,6 +411,9 @@ button {
   font-size: 32px;
   font-weight: 700;
   color: #192a56;
+  white-space: nowrap;
+  overflow: visible;
+  z-index: 25;
 }
 
 .logo .version {
@@ -814,6 +817,13 @@ button {
     padding: 24px 28px;
   }
 
+  .logo {
+    left: 260px; /* clear the 240px sidebar + gap */
+    font-size: 28px;
+    white-space: nowrap;
+    overflow: visible;
+  }
+
   .hello {
     font-size: 34px;
     margin-top: 90px;
@@ -845,8 +855,10 @@ button {
   }
 
   .logo {
-    left: 70px;
+    left: 72px;
     font-size: 26px;
+    white-space: nowrap;
+    overflow: visible;
   }
 
   /* Off-canvas sidebar for mobile & tablet */
