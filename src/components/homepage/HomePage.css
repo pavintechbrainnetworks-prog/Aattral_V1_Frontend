@@ -395,6 +395,14 @@ button {
   display: none;
 }
 
+.main-icons,
+.mobile-menu-btn img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
 /* Logo */
 .logo {
   position: absolute;
@@ -871,6 +879,18 @@ button {
   .sbutton {
     font-size: 13px;
     padding: 7px 12px;
+  }
+
+  .chat-main-icons,
+  .plus-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .main-icons,
+  .mobile-menu-btn img {
+    width: 22px;
+    height: 22px;
   }
 }
 
