@@ -460,20 +460,34 @@ button {
   right: 0;
   top: 56px;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(25, 42, 86, 0.18);
   flex-direction: column;
   overflow: hidden;
-  z-index: 30;
+  z-index: 200;
+  min-width: 160px;
+  border: 1px solid #e3ebff;
+}
+
+/* Shown via React state — NOT hover */
+.profile-menu-open {
+  display: flex;
+}
+
+/* Invisible full-screen backdrop to catch outside clicks */
+.profile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
 }
 
 .avatar:hover .profile-menu {
-  display: flex;
+  /* removed — now controlled by React state only */
 }
 
 .profile-menu button {
   width: 180px;
-  padding: 10px 14px;
+  padding: 12px 16px;
   background: transparent;
   border: 0;
   text-align: left;

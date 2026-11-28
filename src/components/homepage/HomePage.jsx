@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import './HomePage.css';
 import media from '../../assets/media.png';
@@ -40,6 +41,7 @@ export default function HomePage() {
   const [moreOpen, setMoreOpen] = useState(false);
 
   // Profile modal state
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [profileData, setProfileData] = useState({ name: '', email: '', phone: '' });
   const [profileEdit, setProfileEdit] = useState(false);
@@ -720,17 +722,30 @@ export default function HomePage() {
 
         {/* Profile avatar top-right */}
         <div className="profile-area">
-          <div className="avatar" title={isLoggedIn ? username : "Guest"}>
+          <div
+            className="avatar"
+            title={isLoggedIn ? username : "Guest"}
+            onClick={() => setProfileMenuOpen(o => !o)}
+          >
             {isLoggedIn ? (username[0] || "U").toUpperCase() : "G"}
-            <div className="profile-menu">
-              <button onClick={() => onProfileClick("profile")}>
-                <span className="profile-menu-icon">👤</span> Profile
-              </button>
-              <button onClick={() => onProfileClick("logout")} className="profile-logout-btn">
-                <span className="profile-menu-icon">🚪</span> Logout
-              </button>
-            </div>
           </div>
+          {profileMenuOpen && (
+            <>
+              {/* Click-outside backdrop */}
+              <div
+                className="profile-menu-backdrop"
+                onClick={() => setProfileMenuOpen(false)}
+              />
+              <div className="profile-menu profile-menu-open">
+                <button onClick={() => { setProfileMenuOpen(false); onProfileClick("profile"); }}>
+                  <span className="profile-menu-icon">👤</span> Profile
+                </button>
+                <button onClick={() => { setProfileMenuOpen(false); onProfileClick("logout"); }} className="profile-logout-btn">
+                  <span className="profile-menu-icon">🚪</span> Logout
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         {/* ========================================================
@@ -1205,9 +1220,9 @@ export default function HomePage() {
       )}
 
       {/* ========================================================
-          PROFILE MODAL
+          PROFILE MODAL — rendered via Portal to escape container stacking
           ======================================================== */}
-      {profileOpen && (
+      {profileOpen && ReactDOM.createPortal(
         <div className="profile-modal-overlay" onClick={() => setProfileOpen(false)}>
           <div className="profile-modal" onClick={e => e.stopPropagation()}>
 
@@ -1304,7 +1319,8 @@ export default function HomePage() {
               </div>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
