@@ -31,8 +31,8 @@ export default function HomePage() {
   const [username, setUsername] = useState("Guest");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [selectedIndustry, setSelectedIndustry] = useState("Aerospace");
-  const [inputPlaceholder, setInputPlaceholder] = useState("Ask Aattral anything about Aerospace Industry");
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+  const [inputPlaceholder, setInputPlaceholder] = useState("Ask Aattral anything...");
   const searchInputRef = useRef(null);
   const chatBottomRef = useRef(null);
 
@@ -427,15 +427,17 @@ export default function HomePage() {
       (err) => {
         console.error("Streaming error:", err);
         setIsGenerating(false);
-        setErrorBanner(err.message || "Failed to receive AI response.");
+        const isNetworkError = err.message?.includes('404') || err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError');
+        const userFriendlyError = isNetworkError
+          ? "⚠️ Could not connect to Aattral's AI service. The server may be starting up (Render free tier can take 1-2 minutes to wake up). Please wait a moment and try again."
+          : `⚠️ ${err.message || "Something went wrong. Please try again."}`;
+        setErrorBanner(userFriendlyError);
         setMessages((prev) =>
           prev.map((m) =>
             m._id === tempAssistantId
               ? {
                   ...m,
-                  text:
-                    accumulatedText ||
-                    "I encountered an error connecting to the AI service. Please verify your connection or try again.",
+                  text: accumulatedText || userFriendlyError,
                   isStreaming: false,
                 }
               : m
